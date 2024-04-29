@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 function MyForm() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
@@ -14,14 +17,24 @@ function MyForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Here you can handle form submission, e.g., sending data to a server
-    console.log('Email:', email);
-    console.log('Message:', message);
+    
+    // Trigger SweetAlert popup
+    Swal.fire({
+      title: 'Form Submitted!',
+      text: `Email: ${email}\nMessage: ${message}`,
+      icon: 'success',
+      confirmButtonText: 'OK'
+    });
+    
+    // Optionally, you can reset the form fields after submission
+    setEmail('');
+    setMessage('');
+    navigate("/about");
   };
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <div style={{ width: '400px', padding: '20px', border: '1px solid #ccc', borderRadius: '5px' }}>
+      <div style={{ width: '400px', padding: '20px', border: '1px solid #ccc', borderRadius: '5px', boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', backgroundColor: '#f8f9fa' }}>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="exampleFormControlInput1" className="form-label">
